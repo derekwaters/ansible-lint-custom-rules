@@ -1,4 +1,4 @@
-"""Implementation of email-address-validation rule."""
+"""Implementation of email_address_validation rule."""
 
 from __future__ import annotations
 
@@ -69,7 +69,6 @@ class EmailAddressValidationRule(AnsibleLintRule):
         checkemail
     ) -> bool:
         matches = re.search("^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", checkemail)
-        print(matches)
         if matches is None or matches.group(1) is None:
             return False
         domain = matches.group(1)
