@@ -56,13 +56,9 @@ class MustIncludeCollectionsRule(AnsibleLintRule):
     def matchplay(self, file: ansiblelint.file_utils.Lintable,
                   data: 'odict[str, typing.Any]'
                   ) -> typing.List[ansiblelint.errors.MatchError]:
-        print(file.kind)
         if file.kind != "playbook":
             return []
         
-        print(self.id)
-        print(self.tags)
-
         results = []
         for checkcollection in self.mandatory_collections():
             if checkcollection not in data["collections"]:
