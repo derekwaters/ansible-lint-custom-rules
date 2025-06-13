@@ -1,44 +1,21 @@
 # ansible-lint-custom-rules
 Custom Ansible-Lint Rules
 
-- Setup git template repo
-    - basic structure
-    - init script
-    - .pre-commit-config.yml
-- Setup dev environment
-    - ansible-lint
-    - custom ansible-lint rules
-    - precommit
-- Setup github
-    - Branch Protection for 'test', 'preprod', 'prod'
-    - GitHub hooks for push and merge to trigger AAP workflows
-- Setup AAP
-    - Workflow for 'push pipeline'
-        - precommit
-        - variable-assertion-testing
-        - molecule
-        - deploy to AAP 'dev' instance
-    - Workflow for 'merge pipeline'
-        - Branch based on target branch
-    - Workflow for 'test pipeline'
-        - precommit
-        - variable-assertion-testing
-        - molecule
-        - raise CR for non-prod change
-        - sign the branch with testing Cert
-        - AAP deployment to test
-    - Workflow for 'prod pipeline'
-        - precommit
-        - variable-assertion-testing
-        - molecule
-        - validate source branch has been signed with test cert
-        - raise prod CR
-        - AAP deployment to preprod
-        - perform preprod TVT
-        - merge to prod
-        - sign the branch with prod cert
-        - AAP deployment to prod
-- Create workflow to setup new team
-    - Copy and create the github repo for the team
-    - Apply branch protection
-    - Setup webhooks
+Two example custom ansible-lint rules:
+
+### EmailAddressValidationRule.py
+
+This rule searches for any tasks using community.general.mail and validates that 
+all to / bcc / cc fields contain email addresses with whitelisted domains. This
+prevents inadvertent or malicious exfiltration of data from Ansible plays.
+
+### MustIncludeCollectionsRule.py
+
+This rule checks the collections section of a playbook and ensures that a
+configured list of collections are included. This allows for the configuration
+of a mandatory collection to perform any internal checks required prior to
+playbook execution.
+
+Both rules may be enabled / disabled in various ansible-line profiles and
+can be configured to specify the whitelist / mandatory collection list as
+required.
